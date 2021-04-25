@@ -13,6 +13,8 @@
 |
 */
 
+$router->group(['middleware'=>'client.credentials'],function() use ($router){
+
 /* Rutas de Libros*/
 
 Route::get('/authors','AuthorController@index');
@@ -30,3 +32,7 @@ Route::get('/books/{book}','BookController@show');
 Route::put('/books/{book}','BookController@update');
 Route::patch('/books/{book}','BookController@update');
 Route::delete('/books/{book}','BookController@destroy');
+
+
+});
+
