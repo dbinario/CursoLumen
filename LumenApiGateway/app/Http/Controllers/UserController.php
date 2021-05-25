@@ -125,6 +125,14 @@ class UserController extends Controller
 
     }
 
+    public function me(Request $request)
+    {
+
+    return $this->validResponse($request->user());
+
+    }
+
+
 
     //
 }

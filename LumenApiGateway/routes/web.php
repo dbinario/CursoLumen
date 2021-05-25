@@ -47,3 +47,10 @@ Route::delete('/users/{user}','UserController@destroy');
 
 });
 
+//rutas protegidas por token
+
+$router->group(['middleware'=>'auth:api'],function() use ($router){ 
+
+    Route::get('/users/me','UserController@me');
+
+});
