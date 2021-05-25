@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Traits\ApiResponser;
-use App\Models\User;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,7 +31,7 @@ class UserController extends Controller
   
         $users=User::all();
 
-        return $this->successResponse($users);
+        return $this->validResponse($users);
 
 
     }
@@ -48,7 +49,10 @@ class UserController extends Controller
 
         $this->validate($request,$rules);
 
-        $users=User::create($request->all());
+        $fields=$request->all();
+        $fields['password']=Hash::make($request->password);
+
+        $users=User::create($fields);
 
         return $this->successResponse($users,Response::HTTP_CREATED);
 
@@ -74,7 +78,7 @@ class UserController extends Controller
         $rules=[
 
             'name'=>'max:255',
-            'email'=>'email|unique:users,email',
+            'email'=>'email|unique:users,email' . $user,
             'password'=>'min:8|confirmed',
         ];
 
@@ -83,6 +87,12 @@ class UserController extends Controller
         $users=User::findOrFail($user);
 
         $users->fill($request->all());
+
+        if($request->has('password')){
+
+            $user->password=Hash::make($request->password);
+
+        }
 
         if($users->isClean()){
 
