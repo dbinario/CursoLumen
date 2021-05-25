@@ -34,5 +34,16 @@ Route::patch('/books/{book}','BookController@update');
 Route::delete('/books/{book}','BookController@destroy');
 
 
+/* Rutas de Usuarios */
+
+Route::get('/users','UserController@index');
+Route::post('/users','UserController@store');
+Route::get('/users/{user}','UserController@show');
+Route::put('/users/{user}','UserController@update');
+Route::patch('/users/{user}','UserController@update');
+Route::delete('/users/{user}','UserController@destroy');
+
+
+
 });
 
